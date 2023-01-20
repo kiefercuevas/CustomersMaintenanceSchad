@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CustomersMaintenanceSchad.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CustomersMaintenanceSchad
 {
@@ -20,9 +8,16 @@ namespace CustomersMaintenanceSchad
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly CustomerViewModel _viewModelInstance;
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = _viewModelInstance = App.GetServiceInstance<CustomerViewModel>();
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _viewModelInstance.LoadCustomers();
         }
     }
 }

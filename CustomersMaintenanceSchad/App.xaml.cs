@@ -1,6 +1,8 @@
 ﻿using CustomersMaintenanceSchad.Data;
 using CustomersMaintenanceSchad.Services;
+using CustomersMaintenanceSchad.Services.helpers;
 using CustomersMaintenanceSchad.Services.Interfaces;
+using CustomersMaintenanceSchad.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,8 @@ namespace CustomersMaintenanceSchad
     {
         private IConfiguration Configuration { get; set; }
         public IServiceProvider ServiceProvider { get; private set; }
+
+        public static decimal Itbis => 0.18M;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -45,6 +49,15 @@ namespace CustomersMaintenanceSchad
             _ = services.AddSingleton<ICustomerService, CustomerService>();
             _ = services.AddSingleton<IInvoiceService, InvoiceService>();
 
+            _ = services.AddSingleton<IMessageService, MessageService>();
+
+
+            //Adding ViewModels
+            _ = services.AddTransient<CustomerViewModel>();
+            _ = services.AddTransient<CustomerFormViewModel>();
+            
+            _ = services.AddTransient<InvoiceViewModel>();
+            _ = services.AddTransient<InvoiceCreationViewModel>();
 
             return services;
         }

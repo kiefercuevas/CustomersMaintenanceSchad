@@ -1,0 +1,67 @@
+﻿<Window x:Class="CustomersMaintenanceSchad.Views.InvoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CustomersMaintenanceSchad.Views" 
+        xmlns:viewmodels="clr-namespace:CustomersMaintenanceSchad.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:InvoiceViewModel}"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Title="{Binding Title}" Height="450" Width="800">
+
+    <Grid  Margin="5">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Title}" FontSize="30" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"  />
+
+        <Button Grid.Row="1" Width="300" Command="{Binding CreateInvoiceCommand}"
+                Content=" + Crear nueva factura" FontSize="18" FontWeight="Bold"
+                HorizontalAlignment="Right" Margin="0,0,0,5" />
+
+        <DataGrid Style="{StaticResource DefaultDataGridStyle}"
+                ItemsSource="{Binding Invoices}" AutoGenerateColumns="False"
+                Grid.Row="2">
+
+            <DataGrid.Resources>
+
+                <Style TargetType="Button">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="2" />
+                </Style>
+
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Código" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding Id}" />
+                <DataGridTextColumn Width="*" Header="SubTotal" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding SubTotal, StringFormat='{}{0:C}'}" />
+                <DataGridTextColumn Width="*" Header="Total Itbis" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding TotalItbis, StringFormat='{}{0:C}'}" />
+                <DataGridTextColumn Width="*" Header="Total" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding Total, StringFormat='{}{0:C}'}" />
+                <DataGridTemplateColumn Header="Acciones" HeaderStyle="{StaticResource headerStyle}" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                <Button Command="{Binding DataContext.SeeInvoiceDetailCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                        CommandParameter="{Binding .}" Content="Ver detalles" />
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+
+    </Grid>
+
+</Window>

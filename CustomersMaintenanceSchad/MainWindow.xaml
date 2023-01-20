@@ -3,14 +3,69 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CustomersMaintenanceSchad"
         mc:Ignorable="d"
-        Title="Mantenimiento de Clientes Schad" Height="450" Width="800">
-    <Grid>
+        d:DataContext="{d:DesignInstance Type=viewmodels:CustomerViewModel}"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        xmlns:viewmodels="clr-namespace:CustomersMaintenanceSchad.ViewModels" 
+        Title="Mantenimiento de Clientes Schad" Height="600" Width="900"
+        Loaded="Window_Loaded">
+    
+    <Grid  Margin="5">
 
-        
-        
-        
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Clientes SChad" FontSize="30" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"  />
+
+        <Button Grid.Row="1" Width="300" Command="{Binding CreateCommand}"
+                Content=" + Crear nuevo cliente" FontSize="18" FontWeight="Bold"
+                HorizontalAlignment="Right" Margin="0,0,0,5" />
+
+        <DataGrid Style="{StaticResource DefaultDataGridStyle}"
+                ItemsSource="{Binding Customers}" AutoGenerateColumns="False"
+                Grid.Row="2">
+
+            <DataGrid.Resources>
+
+                <Style TargetType="Button">
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Padding" Value="2" />
+                </Style>
+                
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Nombre" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding CustName}" />
+                <DataGridTextColumn Width="*" Header="Dirección" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding Address}" />
+                <DataGridTextColumn Width="*" Header="Tipo de cliente" HeaderStyle="{StaticResource headerStyle}" Binding="{Binding CustomerType.Description}" />
+                <DataGridTemplateColumn Width="1.2*" Header="Acciones" HeaderStyle="{StaticResource headerStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                <Button Command="{Binding DataContext.SeeInvoicesCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                        CommandParameter="{Binding .}" Content="Ver facturas" />
+                                
+                                <Button Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                        CommandParameter="{Binding .}" Content="Editar" />
+                                
+                                <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                        CommandParameter="{Binding .}" Content="Borrar" />
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+
     </Grid>
 </Window>

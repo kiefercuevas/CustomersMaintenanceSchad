@@ -1,5 +1,9 @@
-﻿namespace CustomersMaintenanceSchad.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CustomersMaintenanceSchad.Models
 {
+
+    [Table("InvoiceDetail")]
     public class InvoiceDetail
     {
         public int Id { get; set; }

@@ -6,7 +6,7 @@ namespace CustomersMaintenanceSchad.Services.Interfaces
 {
     public interface ICustomerService
     {
-        Task<List<Customer>> GetActiveCustomers();
+        Task<List<Customer>> GetActiveCustomersWithTypes();
         Task<Customer> Add(Customer customer);
         Task<Customer> Update(Customer customer);
     }

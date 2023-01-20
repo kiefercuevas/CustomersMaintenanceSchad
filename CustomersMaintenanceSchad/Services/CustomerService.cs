@@ -16,9 +16,10 @@ namespace CustomersMaintenanceSchad.Services
             _context = context;
         }
 
-        public Task<List<Customer>> GetActiveCustomers()
+        public Task<List<Customer>> GetActiveCustomersWithTypes()
         {
-            return _context.Customers.Where(c => c.Status)
+            return _context.Customers.Include(c => c.CustomerType)
+                .Where(c => c.Status)
                 .ToListAsync();
         }
 

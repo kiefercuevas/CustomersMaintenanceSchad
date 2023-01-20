@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomersMaintenanceSchad.Models
 {
+    [Table("Invoice")]
     public class Invoice
     {
         public int Id { get; set; }
